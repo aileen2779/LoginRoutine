@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Prolific Interactive. All rights reserved.
 //
 
-#import "PITouchIDManager.h"
+#import "TouchIDManager.h"
 #import <LocalAuthentication/LocalAuthentication.h>
 
 @implementation PITouchIDManager
