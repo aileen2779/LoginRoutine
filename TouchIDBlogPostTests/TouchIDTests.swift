@@ -9,7 +9,7 @@
 import UIKit
 import XCTest
 
-class TouchIDBlogPostTests: XCTestCase {
+class TouchIDTests: XCTestCase {
     
     override func setUp() {
         super.setUp()

@@ -9,7 +9,7 @@
 #import "TouchIDManager.h"
 #import <LocalAuthentication/LocalAuthentication.h>
 
-@implementation PITouchIDManager
+@implementation TouchIDManager
 
 + (void)authenticateUserWithSuccess:(void (^)(BOOL result))successBlock
                             failure:(void (^)(NSError *error))failureBlock {
