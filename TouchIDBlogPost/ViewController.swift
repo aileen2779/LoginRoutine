@@ -17,9 +17,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var rememberMeSwitch: UISwitch!
     @IBOutlet weak var enrollTouchIdSwitch: UISwitch!
     
+    // Define a class for user preferences
     let preferences = UserDefaults.standard
-
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -32,9 +32,6 @@ class ViewController: UIViewController {
         if enrollTouchId != nil {
             isTouchIDEnrolled = preferences.object(forKey: "EnrollTouchID") as! Bool
         }
-
-        print(rememberMe as Any!)
-        print(enrollTouchId as Any!)
         
         //check if my settings]
         if rememberMe != nil {
@@ -60,8 +57,8 @@ class ViewController: UIViewController {
     @IBAction func loginButtonTapped(_ sender: Any) {
 
         // evaluate login and password
-        let userId = userIdTextField.text!
-        let userPassword = passwordTextField.text!
+        let userId          = userIdTextField.text!
+        let userPassword    = passwordTextField.text!
 
         // Check for text fields then animate if empty
         if (userId.isEmpty || userPassword.isEmpty) {
