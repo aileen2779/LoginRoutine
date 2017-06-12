@@ -6,8 +6,9 @@
 import UIKit
 import LocalAuthentication
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITextFieldDelegate {
 
+    let url  = URL_AUTH
 
     @IBOutlet weak var loginStackView: UIStackView!
     @IBOutlet weak var logoutStackView: UIStackView!
@@ -46,6 +47,7 @@ class ViewController: UIViewController {
             return
         }
         
+
         // not logged in
         if (isTouchIDEnrolled) {
             self.touchAuthenticateUser()
@@ -66,11 +68,7 @@ class ViewController: UIViewController {
             return
         }
         
-        if (userId != "gamy316" && userPassword != "gamy666") {
-            animateMe(textField: self.userIdTextField)
-            animateMe(textField: self.passwordTextField)
-            return
-        }
+        login_now(username:userId, password: userPassword)
         
         
         if (rememberMeSwitch.isOn ? true : false) == true {
@@ -79,7 +77,7 @@ class ViewController: UIViewController {
             clearDefaults()
         }
  
-        self.loadDada()
+       // self.loadDada()
         
     }
     
@@ -89,7 +87,7 @@ class ViewController: UIViewController {
         self.view.endEditing(true)
         
         // set a new session
-        preferences.setValue("123456", forKey: "Session")
+        //preferences.setValue("123456", forKey: "Session")
         
         // hide the login stack view
         self.loginStackView.isHidden = true
@@ -220,6 +218,80 @@ class ViewController: UIViewController {
         } while x < 3
     }
 
+    
+    func login_now(username:String, password:String) {
+        let post_data: NSDictionary = NSMutableDictionary()
+        
+        post_data.setValue(username, forKey: "UserID")
+        post_data.setValue(password, forKey: "Password")
+        
+        let url:URL = URL(string: self.url)!
+        let session = URLSession.shared
+        
+        let request = NSMutableURLRequest(url: url)
+        request.httpMethod = "POST"
+        request.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
+        
+        var paramString = ""
+        
+        for (key, value) in post_data {
+            paramString = paramString + (key as! String) + "=" + (value as! String) + "&"
+        }
+        
+        request.httpBody = paramString.data(using: String.Encoding.utf8)
+        
+        let task = session.dataTask(with: request as URLRequest, completionHandler: {
+            (
+            data, response, error) in
+            
+            guard let _:Data = data, let _:URLResponse = response  , error == nil else {
+                
+                return
+            }
+            
+            let json: Any?
+            
+            do {
+                json = try JSONSerialization.jsonObject(with: data!, options: [])
+            } catch {
+                return
+            }
+            
+            guard let server_response = json as? NSDictionary else {
+                return
+            }
+            
+            //print(server_response)
+            
+            // If data_block is empty, session id would be missing
+            if let data_block = server_response["data"] as? NSDictionary {
+                if let session_data = data_block["session"] as? String {
+                   // self.login_session = session_data
+                    
+                    let preferences = UserDefaults.standard
+                    preferences.set(session_data, forKey: "Session")
+                    
+                    DispatchQueue.main.async(execute: self.loadDada)
+                }
+            } else {
+                
+                DispatchQueue.main.async(execute: self.keyPadAuthenticateUser)
+                //self.login_button.isEnabled = true
+            }
+            
+        })
+        
+        task.resume()
+    }
+
+    func loginDone() {
+        //self.performSegue(withIdentifier: "ShifterPokedexVC", sender: self)
+        
+        // Enable login button before segue
+       // login_button.isEnabled = true
+        
+    }
+    
     
 }
 

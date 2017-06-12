@@ -8,12 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		7E8E2F941EEE4E4D00ACB1BF /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8E2F931EEE4E4D00ACB1BF /* CustomTextField.swift */; };
+		7ECD6FB71EEF291700F437AA /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECD6FB61EEF291700F437AA /* Constants.swift */; };
 		8E50FD5719ECC87D00C80B6B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E50FD5619ECC87D00C80B6B /* AppDelegate.swift */; };
 		8E50FD5919ECC87D00C80B6B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E50FD5819ECC87D00C80B6B /* ViewController.swift */; };
 		8E50FD5C19ECC87D00C80B6B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E50FD5A19ECC87D00C80B6B /* Main.storyboard */; };
 		8E50FD5E19ECC87D00C80B6B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E50FD5D19ECC87D00C80B6B /* Images.xcassets */; };
 		8E50FD6119ECC87D00C80B6B /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E50FD5F19ECC87D00C80B6B /* LaunchScreen.xib */; };
-		8E50FD6D19ECC87D00C80B6B /* TouchIDTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E50FD6C19ECC87D00C80B6B /* TouchIDTests.swift */; };
 		8E50FD7819ECC8BA00C80B6B /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E50FD7719ECC8BA00C80B6B /* LocalAuthentication.framework */; };
 		8E70B8651A3A92F80044019F /* TouchIDManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E70B8641A3A92F80044019F /* TouchIDManager.swift */; };
 		8E70B8691A3A9CA80044019F /* TouchIDManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E70B8681A3A9CA80044019F /* TouchIDManager.m */; };
@@ -31,6 +31,7 @@
 
 /* Begin PBXFileReference section */
 		7E8E2F931EEE4E4D00ACB1BF /* CustomTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		7ECD6FB61EEF291700F437AA /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		8E50FD5119ECC87D00C80B6B /* TouchID.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TouchID.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E50FD5519ECC87D00C80B6B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8E50FD5619ECC87D00C80B6B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -40,7 +41,6 @@
 		8E50FD6019ECC87D00C80B6B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		8E50FD6619ECC87D00C80B6B /* TouchIDTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TouchIDTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E50FD6B19ECC87D00C80B6B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8E50FD6C19ECC87D00C80B6B /* TouchIDTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchIDTests.swift; sourceTree = "<group>"; };
 		8E50FD7719ECC8BA00C80B6B /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
 		8E70B8641A3A92F80044019F /* TouchIDManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchIDManager.swift; sourceTree = "<group>"; };
 		8E70B8661A3A9CA70044019F /* TouchIDBlogPost-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TouchIDBlogPost-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -67,12 +67,12 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		7E8E2F921EEE4E1600ACB1BF /* Resources */ = {
+		7ECD6FB51EEF290900F437AA /* Util */ = {
 			isa = PBXGroup;
 			children = (
-				7E8E2F931EEE4E4D00ACB1BF /* CustomTextField.swift */,
+				7ECD6FB61EEF291700F437AA /* Constants.swift */,
 			);
-			name = Resources;
+			name = Util;
 			sourceTree = "<group>";
 		};
 		7EF245A81EEDFB7300A922BE /* Resources */ = {
@@ -88,6 +88,7 @@
 		7EF245A91EEDFB8000A922BE /* View */ = {
 			isa = PBXGroup;
 			children = (
+				7E8E2F931EEE4E4D00ACB1BF /* CustomTextField.swift */,
 				8E50FD5819ECC87D00C80B6B /* ViewController.swift */,
 			);
 			name = View;
@@ -121,7 +122,7 @@
 		8E50FD5319ECC87D00C80B6B /* TouchID */ = {
 			isa = PBXGroup;
 			children = (
-				7E8E2F921EEE4E1600ACB1BF /* Resources */,
+				7ECD6FB51EEF290900F437AA /* Util */,
 				7EF245AA1EEE152F00A922BE /* Model */,
 				7EF245A91EEDFB8000A922BE /* View */,
 				7EF245A81EEDFB7300A922BE /* Resources */,
@@ -148,7 +149,6 @@
 		8E50FD6919ECC87D00C80B6B /* TouchID */ = {
 			isa = PBXGroup;
 			children = (
-				8E50FD6C19ECC87D00C80B6B /* TouchIDTests.swift */,
 				8E50FD6A19ECC87D00C80B6B /* Supporting Files */,
 			);
 			name = TouchID;
@@ -280,6 +280,7 @@
 				8E50FD5719ECC87D00C80B6B /* AppDelegate.swift in Sources */,
 				8E70B8651A3A92F80044019F /* TouchIDManager.swift in Sources */,
 				7E8E2F941EEE4E4D00ACB1BF /* CustomTextField.swift in Sources */,
+				7ECD6FB71EEF291700F437AA /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -287,7 +288,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8E50FD6D19ECC87D00C80B6B /* TouchIDTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

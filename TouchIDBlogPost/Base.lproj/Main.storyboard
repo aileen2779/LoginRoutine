@@ -102,7 +102,7 @@
                                             </switch>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="31" id="Oja-PB-YuZ"/>
+                                            <constraint firstAttribute="height" constant="31" id="Oja-PB-YuZ" userLabel="height = 40"/>
                                             <constraint firstAttribute="width" constant="250" id="jmg-VY-BCc"/>
                                         </constraints>
                                     </stackView>
