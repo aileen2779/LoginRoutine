@@ -76,8 +76,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
         } else {
             clearDefaults()
         }
- 
-       // self.loadDada()
         
     }
     
@@ -85,9 +83,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
     func loadDada() {
         // dismiss the keyboard
         self.view.endEditing(true)
-        
-        // set a new session
-        //preferences.setValue("123456", forKey: "Session")
         
         // hide the login stack view
         self.loginStackView.isHidden = true
@@ -137,8 +132,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
 
     // this takes the saved values and stores them to the text fields
     func restoreDefaults() {
-        userIdTextField.text = preferences.object(forKey: "UserID") as? String
-        passwordTextField.text = preferences.object(forKey: "Password") as? String
+        userIdTextField.text = preferences.object(forKey: "username") as? String
+        passwordTextField.text = preferences.object(forKey: "password") as? String
         rememberMeSwitch.isOn = (preferences.object(forKey: "RememberMe") as? Bool)!
         enrollTouchIdSwitch.isOn = (preferences.object(forKey: "EnrollTouchID") as? Bool)!
     
@@ -147,8 +142,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     func saveDefaults() {
         if (rememberMeSwitch.isOn)  {
-            preferences.setValue(userIdTextField.text, forKey: "UserID")
-            preferences.setValue(passwordTextField.text, forKey: "Password")
+            preferences.setValue(userIdTextField.text, forKey: "username")
+            preferences.setValue(passwordTextField.text, forKey: "password")
             preferences.setValue(rememberMeSwitch.isOn, forKey: "RememberMe")
             preferences.setValue(enrollTouchIdSwitch.isOn, forKey: "EnrollTouchID")
         }
@@ -222,8 +217,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
     func login_now(username:String, password:String) {
         let post_data: NSDictionary = NSMutableDictionary()
         
-        post_data.setValue(username, forKey: "UserID")
-        post_data.setValue(password, forKey: "Password")
+        post_data.setValue(username, forKey: "username")
+        post_data.setValue(password, forKey: "password")
         
         let url:URL = URL(string: self.url)!
         let session = URLSession.shared
@@ -243,9 +238,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         let task = session.dataTask(with: request as URLRequest, completionHandler: {
             (
             data, response, error) in
-            
             guard let _:Data = data, let _:URLResponse = response  , error == nil else {
-                
                 return
             }
             
@@ -261,12 +254,12 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 return
             }
             
-            //print(server_response)
+            print(paramString)
+            print(server_response)
             
             // If data_block is empty, session id would be missing
             if let data_block = server_response["data"] as? NSDictionary {
                 if let session_data = data_block["session"] as? String {
-                   // self.login_session = session_data
                     
                     let preferences = UserDefaults.standard
                     preferences.set(session_data, forKey: "Session")
@@ -275,6 +268,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 }
             } else {
                 
+                DispatchQueue.main.async(execute: self.displayMyAlertMessage)
                 DispatchQueue.main.async(execute: self.keyPadAuthenticateUser)
                 //self.login_button.isEnabled = true
             }
@@ -290,6 +284,16 @@ class ViewController: UIViewController, UITextFieldDelegate {
         // Enable login button before segue
        // login_button.isEnabled = true
         
+    }
+    
+    // function without arguments that are run from async
+    func displayMyAlertMessage() {
+        let myAlert =  UIAlertController(title:"Alert", message: "Invalid username or password", preferredStyle: UIAlertControllerStyle.alert)
+        
+        let okAction = UIAlertAction(title:"Ok", style: UIAlertActionStyle.default, handler: nil)
+        myAlert.addAction(okAction)
+        
+        self.present(myAlert, animated: true, completion: nil)
     }
     
     

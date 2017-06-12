@@ -96,9 +96,6 @@
                                             </label>
                                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="ka4-CK-FR1">
                                                 <rect key="frame" x="201" y="0.0" width="51" height="31"/>
-                                                <connections>
-                                                    <action selector="enrollTouchIDSwitchTapped:" destination="vXZ-lx-hvc" eventType="valueChanged" id="0yZ-gV-W1Q"/>
-                                                </connections>
                                             </switch>
                                         </subviews>
                                         <constraints>
