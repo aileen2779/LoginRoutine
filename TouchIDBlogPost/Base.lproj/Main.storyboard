@@ -24,18 +24,8 @@
                             <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="JxU-NT-Mcz" userLabel="Logout Stack View">
                                 <rect key="frame" x="62" y="298.5" width="250" height="70"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Test" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6r5-xb-4jp">
-                                        <rect key="frame" x="0.0" y="0.0" width="250" height="40"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="250" id="r8C-DW-1Iu"/>
-                                            <constraint firstAttribute="height" constant="40" id="xo9-74-n2y"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XTn-0P-OSu">
-                                        <rect key="frame" x="101" y="40" width="48" height="30"/>
+                                        <rect key="frame" x="101" y="0.0" width="48" height="70"/>
                                         <state key="normal" title="Logout"/>
                                         <connections>
                                             <action selector="logoutButtonTapped:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="e7D-NK-ZkR"/>
@@ -129,7 +119,6 @@
                         <outlet property="logoutStackView" destination="JxU-NT-Mcz" id="NSe-tw-Now"/>
                         <outlet property="passwordTextField" destination="dHi-R3-PiR" id="e7n-hd-Pgg"/>
                         <outlet property="rememberMeSwitch" destination="RUI-tm-cWY" id="zvt-jE-PfN"/>
-                        <outlet property="statusLabel" destination="6r5-xb-4jp" id="MkE-QK-xu9"/>
                         <outlet property="userIdTextField" destination="ust-Bs-WK9" id="gpY-lv-bTh"/>
                     </connections>
                 </viewController>

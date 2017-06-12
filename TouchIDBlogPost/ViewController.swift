@@ -8,7 +8,7 @@ import LocalAuthentication
 
 class ViewController: UIViewController {
 
-    @IBOutlet weak var statusLabel: UILabel!
+
     @IBOutlet weak var loginStackView: UIStackView!
     @IBOutlet weak var logoutStackView: UIStackView!
     
@@ -24,23 +24,27 @@ class ViewController: UIViewController {
         super.viewDidLoad()
 
         var isTouchIDEnrolled:Bool! = false
-        var isLoggedIn:Bool! = false
+        let enrollTouchId = preferences.object(forKey: "EnrollTouchID") as? Bool
+        let rememberMe = preferences.object(forKey: "RememberMe") as? Bool
+        let sessionId = preferences.object(forKey: "Session") as? String
+
         
-        if preferences.object(forKey: "EnrollTouchID") != nil {
+        if enrollTouchId != nil {
             isTouchIDEnrolled = preferences.object(forKey: "EnrollTouchID") as! Bool
         }
 
-        if preferences.object(forKey: "Session") != nil {
-            isLoggedIn = true
-            userIdTextField.text = preferences.object(forKey: "UserID") as? String
-            passwordTextField.text = preferences.object(forKey: "Password") as? String
-            rememberMeSwitch.isOn = (preferences.object(forKey: "RememberMe") as? Bool)!
-            enrollTouchIdSwitch.isOn = (preferences.object(forKey: "EnrollTouchID") as? Bool)!
+        print(rememberMe as Any!)
+        print(enrollTouchId as Any!)
+        
+        //check if my settings]
+        if rememberMe != nil {
+            if (rememberMe)! {
+                self.restoreDefaults()
+            }
         }
 
-
-        // if Logged in then no need to get authenticated
-        if isLoggedIn {
+        // find out if user was previously logged on
+        if sessionId != nil {
             self.loadDada()
             return
         }
@@ -65,23 +69,19 @@ class ViewController: UIViewController {
             return
         }
         
-        let rememberMe =  (rememberMeSwitch.isOn ? true : false)
-        let enrollTouchId =  (enrollTouchIdSwitch.isOn ? true : false)
+        if (userId != "gamy316" && userPassword != "gamy666") {
+            animateMe(textField: self.userIdTextField)
+            animateMe(textField: self.passwordTextField)
+            return
+        }
         
-        if rememberMe {
-            preferences.setValue(userIdTextField.text, forKey: "UserID")
-            preferences.setValue(passwordTextField.text, forKey: "Password")
-            preferences.setValue(rememberMe, forKey: "RememberMe")
-            preferences.setValue(enrollTouchId, forKey: "EnrollTouchID")
-
+        
+        if (rememberMeSwitch.isOn ? true : false) == true {
+            saveDefaults()
         } else {
-            userIdTextField.text = ""
-            passwordTextField.text = ""
-            rememberMeSwitch.isOn = false
-            enrollTouchIdSwitch.isOn = false
+            clearDefaults()
         }
  
-        
         self.loadDada()
         
     }
@@ -97,30 +97,19 @@ class ViewController: UIViewController {
         // hide the login stack view
         self.loginStackView.isHidden = true
         self.logoutStackView.isHidden = false
-        self.statusLabel.text = "Shifter authenticated"
-        
+
     }
 
     
     @IBAction func logoutButtonTapped(_ sender: Any) {
         
-        // 1
         let optionMenu = UIAlertController(title: nil, message: "Are you sure?", preferredStyle: .actionSheet)
-        
-        // 2
         let logoutAction = UIAlertAction(title: "Logout", style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
-            
-            
+
              // remove the session
              self.preferences.removeObject(forKey: "Session")
-             
-             // set the text values to the user defaults
-             self.preferences.setValue(self.userIdTextField.text, forKey: "UserID")
-             self.preferences.setValue(self.passwordTextField.text, forKey: "Password")
-             self.preferences.setValue(self.rememberMeSwitch.isOn, forKey: "RememberMe")
-             self.preferences.setValue(self.enrollTouchIdSwitch.isOn, forKey: "EnrollTouchID")
-             
+            
              // hide the log out stack view
              self.logoutStackView.isHidden = true
              
@@ -137,39 +126,54 @@ class ViewController: UIViewController {
             print("Cancelled")
         })
         
-        
-        // 4
         optionMenu.addAction(logoutAction)
         optionMenu.addAction(cancelAction)
-        
-        // 5
+
         self.present(optionMenu, animated: true, completion: nil)
         
 
     }
     
     func keyPadAuthenticateUser() {
-        if preferences.object(forKey: "RememberMe") != nil {
-            let imRemembered = preferences.object(forKey: "RememberMe") as! Bool
-            if (imRemembered) {
-                userIdTextField.text = preferences.object(forKey: "UserID") as? String
-                passwordTextField.text = preferences.object(forKey: "Password") as? String
-                rememberMeSwitch.isOn = preferences.object(forKey: "RememberMe") != nil
-            }
-        }
 
-        if preferences.object(forKey: "EnrollTouchID") != nil {
-            let touchIDEnrolled = preferences.object(forKey: "EnrollTouchID") as! Bool
-            if (touchIDEnrolled) {
-                enrollTouchIdSwitch.isOn = (preferences.object(forKey: "EnrollTouchID") != nil)
-            }
-        }
         loginStackView.isHidden = false
         
     }
 
+    // this takes the saved values and stores them to the text fields
+    func restoreDefaults() {
+        userIdTextField.text = preferences.object(forKey: "UserID") as? String
+        passwordTextField.text = preferences.object(forKey: "Password") as? String
+        rememberMeSwitch.isOn = (preferences.object(forKey: "RememberMe") as? Bool)!
+        enrollTouchIdSwitch.isOn = (preferences.object(forKey: "EnrollTouchID") as? Bool)!
+    
+    }
+    
+    
+    func saveDefaults() {
+        if (rememberMeSwitch.isOn)  {
+            preferences.setValue(userIdTextField.text, forKey: "UserID")
+            preferences.setValue(passwordTextField.text, forKey: "Password")
+            preferences.setValue(rememberMeSwitch.isOn, forKey: "RememberMe")
+            preferences.setValue(enrollTouchIdSwitch.isOn, forKey: "EnrollTouchID")
+        }
+    }
+    
+    func clearDefaults() {
+        // only clear if rememberMeSwitch if off
+        if !(rememberMeSwitch.isOn) {
+            userIdTextField.text = ""
+            passwordTextField.text = ""
+            rememberMeSwitch.isOn = false
+            enrollTouchIdSwitch.isOn = false
+        }
+    }
     
     func touchAuthenticateUser() {
+        self.restoreDefaults()
+        
+        loginStackView.isHidden = false
+        
         let touchIDManager = TouchIDManager()
 
         touchIDManager.authenticateUser(success: { () -> () in
@@ -186,14 +190,14 @@ class ViewController: UIViewController {
                     self.keyPadAuthenticateUser()
                 case LAError.Code.userFallback.rawValue:
                     print("User wants to use a password")
-                    self.statusLabel.text = "User wants to use a password"
+
                     self.keyPadAuthenticateUser()
                 case LAError.Code.touchIDNotEnrolled.rawValue:
                     print("TouchID not enrolled")
-                    self.statusLabel.text = "TouchID not enrolled"
+
                 case LAError.Code.passcodeNotSet.rawValue:
                     print("Passcode not set")
-                    self.statusLabel.text = "Passcode not set"
+
                 default:
                     print("Authentication failed")
                     self.keyPadAuthenticateUser()
