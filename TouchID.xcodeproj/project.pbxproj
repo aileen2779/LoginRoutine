@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7EF245AC1EEE155200A922BE /* UserDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF245AB1EEE155200A922BE /* UserDefault.swift */; };
+		7E8E2F941EEE4E4D00ACB1BF /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8E2F931EEE4E4D00ACB1BF /* CustomTextField.swift */; };
 		8E50FD5719ECC87D00C80B6B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E50FD5619ECC87D00C80B6B /* AppDelegate.swift */; };
 		8E50FD5919ECC87D00C80B6B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E50FD5819ECC87D00C80B6B /* ViewController.swift */; };
 		8E50FD5C19ECC87D00C80B6B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E50FD5A19ECC87D00C80B6B /* Main.storyboard */; };
@@ -30,7 +30,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		7EF245AB1EEE155200A922BE /* UserDefault.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefault.swift; sourceTree = "<group>"; };
+		7E8E2F931EEE4E4D00ACB1BF /* CustomTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		8E50FD5119ECC87D00C80B6B /* TouchID.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TouchID.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E50FD5519ECC87D00C80B6B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8E50FD5619ECC87D00C80B6B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -67,6 +67,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7E8E2F921EEE4E1600ACB1BF /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				7E8E2F931EEE4E4D00ACB1BF /* CustomTextField.swift */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		7EF245A81EEDFB7300A922BE /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -88,7 +96,6 @@
 		7EF245AA1EEE152F00A922BE /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				7EF245AB1EEE155200A922BE /* UserDefault.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -114,6 +121,7 @@
 		8E50FD5319ECC87D00C80B6B /* TouchID */ = {
 			isa = PBXGroup;
 			children = (
+				7E8E2F921EEE4E1600ACB1BF /* Resources */,
 				7EF245AA1EEE152F00A922BE /* Model */,
 				7EF245A91EEDFB8000A922BE /* View */,
 				7EF245A81EEDFB7300A922BE /* Resources */,
@@ -269,9 +277,9 @@
 			files = (
 				8E50FD5919ECC87D00C80B6B /* ViewController.swift in Sources */,
 				8E70B8691A3A9CA80044019F /* TouchIDManager.m in Sources */,
-				7EF245AC1EEE155200A922BE /* UserDefault.swift in Sources */,
 				8E50FD5719ECC87D00C80B6B /* AppDelegate.swift in Sources */,
 				8E70B8651A3A92F80044019F /* TouchIDManager.swift in Sources */,
+				7E8E2F941EEE4E4D00ACB1BF /* CustomTextField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

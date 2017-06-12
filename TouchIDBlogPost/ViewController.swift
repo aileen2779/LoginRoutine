@@ -16,20 +16,36 @@ class ViewController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var rememberMeSwitch: UISwitch!
     @IBOutlet weak var enrollTouchIdSwitch: UISwitch!
+    
     let preferences = UserDefaults.standard
 
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let preferences = UserDefaults.standard
         var isTouchIDEnrolled:Bool! = false
+        var isLoggedIn:Bool! = false
         
         if preferences.object(forKey: "EnrollTouchID") != nil {
             isTouchIDEnrolled = preferences.object(forKey: "EnrollTouchID") as! Bool
-            print(isTouchIDEnrolled)
+        }
+
+        if preferences.object(forKey: "Session") != nil {
+            isLoggedIn = true
+            userIdTextField.text = preferences.object(forKey: "UserID") as? String
+            passwordTextField.text = preferences.object(forKey: "Password") as? String
+            rememberMeSwitch.isOn = (preferences.object(forKey: "RememberMe") as? Bool)!
+            enrollTouchIdSwitch.isOn = (preferences.object(forKey: "EnrollTouchID") as? Bool)!
+        }
+
+
+        // if Logged in then no need to get authenticated
+        if isLoggedIn {
+            self.loadDada()
+            return
         }
         
+        // not logged in
         if (isTouchIDEnrolled) {
             self.touchAuthenticateUser()
         } else {
@@ -42,56 +58,67 @@ class ViewController: UIViewController {
         // evaluate login and password
         let userId = userIdTextField.text!
         let userPassword = passwordTextField.text!
-        
-        // Check for empty fields then animate
+
+        // Check for text fields then animate if empty
         if (userId.isEmpty || userPassword.isEmpty) {
             animateMe(textField: (userId.isEmpty ? self.userIdTextField : self.passwordTextField) )
             return
-        } else {
-            // you are logged in
-            preferences.setValue("123456", forKey: "Session")
         }
         
         let rememberMe =  (rememberMeSwitch.isOn ? true : false)
-        let enrollTouchId = (enrollTouchIdSwitch.isOn ? true : false)
+        let enrollTouchId =  (enrollTouchIdSwitch.isOn ? true : false)
         
         if rememberMe {
-            preferences.setValue(userId, forKey: "UserID")
-            preferences.setValue(userPassword, forKey: "Password")
+            preferences.setValue(userIdTextField.text, forKey: "UserID")
+            preferences.setValue(passwordTextField.text, forKey: "Password")
             preferences.setValue(rememberMe, forKey: "RememberMe")
             preferences.setValue(enrollTouchId, forKey: "EnrollTouchID")
+
         } else {
             userIdTextField.text = ""
             passwordTextField.text = ""
-            
-            preferences.setValue("", forKey: "UserID")
-            preferences.setValue("", forKey: "Password")
-            preferences.setValue(false, forKey: "RememberMe")
-            preferences.setValue(false, forKey: "EnrollTouchID")
-
+            rememberMeSwitch.isOn = false
+            enrollTouchIdSwitch.isOn = false
         }
-        //print(preferences.object(forKey: "UserID"))
-        //print(preferences.object(forKey: "Password"))
-        //print(preferences.object(forKey: "RememberMe"))
-        //print(preferences.object(forKey: "EnrollTouchID"))
-        
+ 
         
         self.loadDada()
         
     }
     
+
+    func loadDada() {
+        // dismiss the keyboard
+        self.view.endEditing(true)
+        
+        // set a new session
+        preferences.setValue("123456", forKey: "Session")
+        
+        self.loginStackView.isHidden = true
+        self.logoutStackView.isHidden = false
+        self.statusLabel.text = "Shifter authenticated"
+        
+    }
+
+    
     @IBAction func logoutButtonTapped(_ sender: Any) {
+        // remove the session
         preferences.removeObject(forKey: "Session")
         
+        // set the text values to the user defaults
+        preferences.setValue(userIdTextField.text, forKey: "UserID")
+        preferences.setValue(passwordTextField.text, forKey: "Password")
+        preferences.setValue(rememberMeSwitch.isOn, forKey: "RememberMe")
+        preferences.setValue(enrollTouchIdSwitch.isOn, forKey: "EnrollTouchID")
+            
         // hide the log out stack view
         self.logoutStackView.isHidden = true
-
+        
         // show the login stack view
         self.loginStackView.isHidden = false
         
         // set focus to the user id text field
         self.userIdTextField.becomeFirstResponder()
-
     }
     
     func keyPadAuthenticateUser() {
@@ -100,7 +127,7 @@ class ViewController: UIViewController {
             if (imRemembered) {
                 userIdTextField.text = preferences.object(forKey: "UserID") as? String
                 passwordTextField.text = preferences.object(forKey: "Password") as? String
-                rememberMeSwitch.isOn = (preferences.object(forKey: "RememberMe") != nil)
+                rememberMeSwitch.isOn = preferences.object(forKey: "RememberMe") != nil
             }
         }
 
@@ -111,7 +138,6 @@ class ViewController: UIViewController {
             }
         }
         loginStackView.isHidden = false
-        
         
     }
 
@@ -146,12 +172,6 @@ class ViewController: UIViewController {
                     self.keyPadAuthenticateUser()
                 }
         })
-    }
-
-    func loadDada() {
-        self.loginStackView.isHidden = true
-        self.logoutStackView.isHidden = false
-        self.statusLabel.text = "Shifter authenticated"
     }
 
 
