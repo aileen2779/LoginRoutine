@@ -94,6 +94,7 @@ class ViewController: UIViewController {
         // set a new session
         preferences.setValue("123456", forKey: "Session")
         
+        // hide the login stack view
         self.loginStackView.isHidden = true
         self.logoutStackView.isHidden = false
         self.statusLabel.text = "Shifter authenticated"
@@ -102,23 +103,49 @@ class ViewController: UIViewController {
 
     
     @IBAction func logoutButtonTapped(_ sender: Any) {
-        // remove the session
-        preferences.removeObject(forKey: "Session")
         
-        // set the text values to the user defaults
-        preferences.setValue(userIdTextField.text, forKey: "UserID")
-        preferences.setValue(passwordTextField.text, forKey: "Password")
-        preferences.setValue(rememberMeSwitch.isOn, forKey: "RememberMe")
-        preferences.setValue(enrollTouchIdSwitch.isOn, forKey: "EnrollTouchID")
+        // 1
+        let optionMenu = UIAlertController(title: nil, message: "Are you sure?", preferredStyle: .actionSheet)
+        
+        // 2
+        let logoutAction = UIAlertAction(title: "Logout", style: .default, handler: {
+            (alert: UIAlertAction!) -> Void in
             
-        // hide the log out stack view
-        self.logoutStackView.isHidden = true
+            
+             // remove the session
+             self.preferences.removeObject(forKey: "Session")
+             
+             // set the text values to the user defaults
+             self.preferences.setValue(self.userIdTextField.text, forKey: "UserID")
+             self.preferences.setValue(self.passwordTextField.text, forKey: "Password")
+             self.preferences.setValue(self.rememberMeSwitch.isOn, forKey: "RememberMe")
+             self.preferences.setValue(self.enrollTouchIdSwitch.isOn, forKey: "EnrollTouchID")
+             
+             // hide the log out stack view
+             self.logoutStackView.isHidden = true
+             
+             // show the login stack view
+             self.loginStackView.isHidden = false
+             
+             // set focus to the user id text field
+             //self.userIdTextField.becomeFirstResponder()
+ 
+        })
+        //
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {
+            (alert: UIAlertAction!) -> Void in
+            print("Cancelled")
+        })
         
-        // show the login stack view
-        self.loginStackView.isHidden = false
         
-        // set focus to the user id text field
-        self.userIdTextField.becomeFirstResponder()
+        // 4
+        optionMenu.addAction(logoutAction)
+        optionMenu.addAction(cancelAction)
+        
+        // 5
+        self.present(optionMenu, animated: true, completion: nil)
+        
+
     }
     
     func keyPadAuthenticateUser() {
