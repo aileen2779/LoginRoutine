@@ -21,15 +21,34 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="FsF-Kl-MSH">
-                                <rect key="frame" x="172" y="318" width="30" height="30"/>
+                            <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="JxU-NT-Mcz" userLabel="Logout Stack View">
+                                <rect key="frame" x="62" y="298.5" width="250" height="70"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Test" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6r5-xb-4jp">
+                                        <rect key="frame" x="0.0" y="0.0" width="250" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="250" id="r8C-DW-1Iu"/>
+                                            <constraint firstAttribute="height" constant="40" id="xo9-74-n2y"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XTn-0P-OSu">
+                                        <rect key="frame" x="101" y="40" width="48" height="30"/>
+                                        <state key="normal" title="Logout"/>
+                                        <connections>
+                                            <action selector="logoutButtonTapped:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="e7D-NK-ZkR"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="b6W-9T-VH5"/>
-                                    <constraint firstAttribute="width" constant="30" id="cj0-u8-a59"/>
+                                    <constraint firstAttribute="width" constant="250" id="WBT-t0-UJG"/>
+                                    <constraint firstAttribute="height" constant="70" id="x1l-JG-6Ce"/>
                                 </constraints>
-                            </activityIndicatorView>
+                            </stackView>
                             <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" distribution="equalSpacing" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="RCn-QH-k29">
-                                <rect key="frame" x="62" y="217" width="250" height="175"/>
+                                <rect key="frame" x="62" y="246" width="250" height="175"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="User ID" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="ust-Bs-WK9">
@@ -96,29 +115,18 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6r5-xb-4jp">
-                                <rect key="frame" x="62" y="169" width="250" height="40"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="250" id="r8C-DW-1Iu"/>
-                                    <constraint firstAttribute="height" constant="40" id="xo9-74-n2y"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="6r5-xb-4jp" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="bzy-mY-bQs"/>
-                            <constraint firstItem="FsF-Kl-MSH" firstAttribute="centerY" secondItem="kh9-bI-dsS" secondAttribute="centerY" id="g8H-LD-yX2"/>
-                            <constraint firstItem="FsF-Kl-MSH" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="qZW-t1-P76"/>
+                            <constraint firstItem="JxU-NT-Mcz" firstAttribute="centerY" secondItem="kh9-bI-dsS" secondAttribute="centerY" id="9qe-yw-ZPh"/>
+                            <constraint firstItem="JxU-NT-Mcz" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="q2j-vh-ckN"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="7ui-ua-ZeS"/>
                     <connections>
-                        <outlet property="activityIndicator" destination="FsF-Kl-MSH" id="twR-rW-OPm"/>
                         <outlet property="enrollTouchIdSwitch" destination="ka4-CK-FR1" id="3rB-kC-23i"/>
                         <outlet property="loginStackView" destination="RCn-QH-k29" id="PQq-ep-ehw"/>
+                        <outlet property="logoutStackView" destination="JxU-NT-Mcz" id="NSe-tw-Now"/>
                         <outlet property="passwordTextField" destination="dHi-R3-PiR" id="e7n-hd-Pgg"/>
                         <outlet property="rememberMeSwitch" destination="RUI-tm-cWY" id="zvt-jE-PfN"/>
                         <outlet property="statusLabel" destination="6r5-xb-4jp" id="MkE-QK-xu9"/>
@@ -132,7 +140,7 @@
         <!--Navigation Controller-->
         <scene sceneID="chH-yN-bxl">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="zJF-1K-5bQ" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="zJF-1K-5bQ" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="gwF-wN-nog">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>

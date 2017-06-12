@@ -10,16 +10,15 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var loginStackView: UIStackView!
+    @IBOutlet weak var logoutStackView: UIStackView!
     
     @IBOutlet weak var userIdTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var rememberMeSwitch: UISwitch!
     @IBOutlet weak var enrollTouchIdSwitch: UISwitch!
-    
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    let preferences = UserDefaults.standard
 
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -39,38 +38,63 @@ class ViewController: UIViewController {
     }
     
     @IBAction func loginButtonTapped(_ sender: Any) {
+
         // evaluate login and password
         let userId = userIdTextField.text!
         let userPassword = passwordTextField.text!
         
-        //(x = nil) ? x : y
-        // Check for empty fields
+        // Check for empty fields then animate
         if (userId.isEmpty || userPassword.isEmpty) {
             animateMe(textField: (userId.isEmpty ? self.userIdTextField : self.passwordTextField) )
             return
+        } else {
+            // you are logged in
+            preferences.setValue("123456", forKey: "Session")
         }
-        
-        let preferences = UserDefaults.standard
         
         let rememberMe =  (rememberMeSwitch.isOn ? true : false)
         let enrollTouchId = (enrollTouchIdSwitch.isOn ? true : false)
         
-        preferences.setValue(userId, forKey: "UserID")
-        preferences.setValue(userPassword, forKey: "Password")
-        preferences.setValue(rememberMe, forKey: "RememberMe")
-        preferences.setValue(enrollTouchId, forKey: "EnrollTouchID")
-        
+        if rememberMe {
+            preferences.setValue(userId, forKey: "UserID")
+            preferences.setValue(userPassword, forKey: "Password")
+            preferences.setValue(rememberMe, forKey: "RememberMe")
+            preferences.setValue(enrollTouchId, forKey: "EnrollTouchID")
+        } else {
+            userIdTextField.text = ""
+            passwordTextField.text = ""
+            
+            preferences.setValue("", forKey: "UserID")
+            preferences.setValue("", forKey: "Password")
+            preferences.setValue(false, forKey: "RememberMe")
+            preferences.setValue(false, forKey: "EnrollTouchID")
+
+        }
         //print(preferences.object(forKey: "UserID"))
         //print(preferences.object(forKey: "Password"))
         //print(preferences.object(forKey: "RememberMe"))
         //print(preferences.object(forKey: "EnrollTouchID"))
         
+        
+        self.loadDada()
+        
+    }
+    
+    @IBAction func logoutButtonTapped(_ sender: Any) {
+        preferences.removeObject(forKey: "Session")
+        
+        // hide the log out stack view
+        self.logoutStackView.isHidden = true
+
+        // show the login stack view
+        self.loginStackView.isHidden = false
+        
+        // set focus to the user id text field
+        self.userIdTextField.becomeFirstResponder()
+
     }
     
     func keyPadAuthenticateUser() {
-        
-        let preferences = UserDefaults.standard
-        
         if preferences.object(forKey: "RememberMe") != nil {
             let imRemembered = preferences.object(forKey: "RememberMe") as! Bool
             if (imRemembered) {
@@ -88,27 +112,12 @@ class ViewController: UIViewController {
         }
         loginStackView.isHidden = false
         
-    }
-    
-    func animateMe(textField: UITextField) {
-        
-        let _thisTextField = textField
-        
-        var x = 0
-        repeat {
-            UIView.animate(withDuration: 0.1, delay: 0.0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseIn, animations: {_thisTextField.center.x += 10 }, completion: nil)
-            UIView.animate(withDuration: 0.1, delay: 0.1, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseIn, animations: {_thisTextField.center.x -= 20 }, completion: nil)
-            UIView.animate(withDuration: 0.1, delay: 0.2, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseIn, animations: {_thisTextField.center.x += 10 }, completion: nil)
-            
-            x += 1
-        } while x < 3
         
     }
-
 
     
     func touchAuthenticateUser() {
-        let touchIDManager = PITouchIDManager()
+        let touchIDManager = TouchIDManager()
 
         touchIDManager.authenticateUser(success: { () -> () in
             OperationQueue.main.addOperation({ () -> Void in
@@ -126,11 +135,6 @@ class ViewController: UIViewController {
                     print("User wants to use a password")
                     self.statusLabel.text = "User wants to use a password"
                     self.keyPadAuthenticateUser()
-
-                    // We show the alert view in the main thread (always update the UI in the main thread)
-                    //OperationQueue.main.addOperation({ () -> Void in
-                    //    self.showPasswordAlert()
-                    //})
                 case LAError.Code.touchIDNotEnrolled.rawValue:
                     print("TouchID not enrolled")
                     self.statusLabel.text = "TouchID not enrolled"
@@ -140,66 +144,34 @@ class ViewController: UIViewController {
                 default:
                     print("Authentication failed")
                     self.keyPadAuthenticateUser()
-
-                    //self.statusLabel.text = "Authentication failed"
-                    //OperationQueue.main.addOperation({ () -> Void in
-                    //    self.showPasswordAlert()
-                    //})
                 }
         })
     }
 
     func loadDada() {
+        self.loginStackView.isHidden = true
+        self.logoutStackView.isHidden = false
         self.statusLabel.text = "Shifter authenticated"
     }
 
-    func showPasswordAlert() {
-        // New way to present an alert view using UIAlertController
-        let alertController = UIAlertController(title:"702Shifter App",
-                                                message: "Please enter password",
-                                                preferredStyle: .alert)
-
-        // We define the actions to add to the alert controller
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) -> Void in
-            print(action)
-        }
-        let doneAction = UIAlertAction(title: "Done", style: .default) { (action) -> Void in
-            let passwordTextField = alertController.textFields![0] as UITextField
-            if let text = passwordTextField.text {
-                self.login(text)
-            }
-        }
-        doneAction.isEnabled = false
-
-        // We are customizing the text field using a configuration handler
-        alertController.addTextField { (textField) -> Void in
-            textField.placeholder = "Password"
-            textField.isSecureTextEntry = true
-
-            NotificationCenter.default.addObserver(forName: NSNotification.Name.UITextFieldTextDidChange, object: textField, queue: OperationQueue.main, using: { (notification) -> Void in
-                doneAction.isEnabled = textField.text != ""
-            })
-        }
-        alertController.addAction(cancelAction)
-        alertController.addAction(doneAction)
-
-        self.present(alertController, animated: true) {
-            // Nothing to do here
-        }
-    }
-
-    func login(_ password: String) {
-        if password == "prolific" {
-            self.loadDada()
-        } else {
-            self.showPasswordAlert()
-        }
-    }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
         super.touchesBegan(touches, with: event)
     }
+    
+    func animateMe(textField: UITextField) {
+        let _thisTextField = textField
+        var x = 0
+        repeat {
+            UIView.animate(withDuration: 0.1, delay: 0.0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseIn, animations: {_thisTextField.center.x += 10 }, completion: nil)
+            UIView.animate(withDuration: 0.1, delay: 0.1, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseIn, animations: {_thisTextField.center.x -= 20 }, completion: nil)
+            UIView.animate(withDuration: 0.1, delay: 0.2, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseIn, animations: {_thisTextField.center.x += 10 }, completion: nil)
+            
+            x += 1
+        } while x < 3
+    }
+
     
 }
 

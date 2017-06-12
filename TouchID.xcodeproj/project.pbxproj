@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7EF245AC1EEE155200A922BE /* UserDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF245AB1EEE155200A922BE /* UserDefault.swift */; };
 		8E50FD5719ECC87D00C80B6B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E50FD5619ECC87D00C80B6B /* AppDelegate.swift */; };
 		8E50FD5919ECC87D00C80B6B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E50FD5819ECC87D00C80B6B /* ViewController.swift */; };
 		8E50FD5C19ECC87D00C80B6B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E50FD5A19ECC87D00C80B6B /* Main.storyboard */; };
@@ -29,6 +30,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7EF245AB1EEE155200A922BE /* UserDefault.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefault.swift; sourceTree = "<group>"; };
 		8E50FD5119ECC87D00C80B6B /* TouchID.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TouchID.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E50FD5519ECC87D00C80B6B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8E50FD5619ECC87D00C80B6B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -65,6 +67,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7EF245A81EEDFB7300A922BE /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				8E70B8641A3A92F80044019F /* TouchIDManager.swift */,
+				8E70B8671A3A9CA80044019F /* TouchIDManager.h */,
+				8E70B8681A3A9CA80044019F /* TouchIDManager.m */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		7EF245A91EEDFB8000A922BE /* View */ = {
+			isa = PBXGroup;
+			children = (
+				8E50FD5819ECC87D00C80B6B /* ViewController.swift */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		7EF245AA1EEE152F00A922BE /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				7EF245AB1EEE155200A922BE /* UserDefault.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		8E50FD4819ECC87D00C80B6B = {
 			isa = PBXGroup;
 			children = (
@@ -86,11 +114,10 @@
 		8E50FD5319ECC87D00C80B6B /* TouchID */ = {
 			isa = PBXGroup;
 			children = (
+				7EF245AA1EEE152F00A922BE /* Model */,
+				7EF245A91EEDFB8000A922BE /* View */,
+				7EF245A81EEDFB7300A922BE /* Resources */,
 				8E50FD5619ECC87D00C80B6B /* AppDelegate.swift */,
-				8E50FD5819ECC87D00C80B6B /* ViewController.swift */,
-				8E70B8641A3A92F80044019F /* TouchIDManager.swift */,
-				8E70B8671A3A9CA80044019F /* TouchIDManager.h */,
-				8E70B8681A3A9CA80044019F /* TouchIDManager.m */,
 				8E50FD5A19ECC87D00C80B6B /* Main.storyboard */,
 				8E50FD5D19ECC87D00C80B6B /* Images.xcassets */,
 				8E50FD5F19ECC87D00C80B6B /* LaunchScreen.xib */,
@@ -242,6 +269,7 @@
 			files = (
 				8E50FD5919ECC87D00C80B6B /* ViewController.swift in Sources */,
 				8E70B8691A3A9CA80044019F /* TouchIDManager.m in Sources */,
+				7EF245AC1EEE155200A922BE /* UserDefault.swift in Sources */,
 				8E50FD5719ECC87D00C80B6B /* AppDelegate.swift in Sources */,
 				8E70B8651A3A92F80044019F /* TouchIDManager.swift in Sources */,
 			);

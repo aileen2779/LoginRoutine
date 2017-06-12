@@ -9,7 +9,7 @@
 import UIKit
 import LocalAuthentication
 
-class PITouchIDManager {
+class TouchIDManager {
 
     func authenticateUser(success: @escaping () -> (), failure: @escaping (NSError) -> ()) {
         // Get the current authentication context
